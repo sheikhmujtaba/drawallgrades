@@ -71,16 +71,30 @@ var drawArray = function(array2D, xScale, yScale, cScale)
             return cScale(arr.quizes)
           })
     .attr("stroke-width", 3)
-
+    .on('mouseover', function(d, i)
+           {
+            console.log(d)
+                d3.select(".img *").remove();
+                d3.select(".img")
+                    .append("img")
+                    .attr("src", "penguins/" + d.picture);
+            })
+    
 
 var linegenerator = d3.line()
 .x(function(num, index){return xScale(index)})
 .y(function(num){return yScale(num)})
 .curve(d3.curveNatural)
 
-arrays.datum(function(obj){ return obj.quizes.map(grades)})
-    .append("path")
-    .attr("d", linegenerator)
+d3.select("body")
+        .append("div")
+        .attr("class", "img");
+    
+arrays.append("path")
+    .datum(function(obj){ return obj.quizes.map(grades)})
+     .attr("d", linegenerator)
+
+        
 }
 
 var grades = function(quizes)
